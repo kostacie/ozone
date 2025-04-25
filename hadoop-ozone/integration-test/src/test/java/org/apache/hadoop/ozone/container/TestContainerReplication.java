@@ -84,6 +84,7 @@ import org.apache.hadoop.ozone.om.helpers.OmKeyLocationInfoGroup;
 import org.apache.ozone.test.tag.Flaky;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -284,7 +285,7 @@ class TestContainerReplication {
   }
 
   @Flaky("HDDS-12760")
-  @Test
+  @RepeatedTest(10)
   public void testImportedContainerIsClosed() throws Exception {
     OzoneConfiguration conf = createConfiguration(false);
     // create a 4 node cluster
