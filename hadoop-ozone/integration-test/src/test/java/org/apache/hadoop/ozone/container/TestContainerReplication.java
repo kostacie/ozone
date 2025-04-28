@@ -322,7 +322,7 @@ class TestContainerReplication {
   }
 
 
-  @Test
+  @RepeatedTest(20)
   @Flaky("HDDS-11087")
   public void testECContainerReplication() throws Exception {
     OzoneConfiguration conf = createConfiguration(false);
