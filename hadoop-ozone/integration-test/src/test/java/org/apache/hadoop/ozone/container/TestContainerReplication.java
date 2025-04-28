@@ -285,7 +285,7 @@ class TestContainerReplication {
   }
 
   @Flaky("HDDS-12760")
-  @RepeatedTest(10)
+  @RepeatedTest(20)
   public void testImportedContainerIsClosed() throws Exception {
     OzoneConfiguration conf = createConfiguration(false);
     // create a 4 node cluster
