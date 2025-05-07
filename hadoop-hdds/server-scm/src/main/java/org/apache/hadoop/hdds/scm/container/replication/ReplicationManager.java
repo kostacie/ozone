@@ -526,6 +526,11 @@ public class ReplicationManager implements SCMService, ContainerReplicaPendingOp
     DatanodeDetails source = selectAndOptionallyExcludeDatanode(
         1, sourceWithCmds);
 
+    if (source.equals(target)) {
+      LOG.warn("Source and target are the same ({})!", source.getUuidString());
+      return;
+    }
+
     ReplicateContainerCommand cmd =
         ReplicateContainerCommand.toTarget(containerID, target);
     cmd.setReplicaIndex(replicaIndex);
