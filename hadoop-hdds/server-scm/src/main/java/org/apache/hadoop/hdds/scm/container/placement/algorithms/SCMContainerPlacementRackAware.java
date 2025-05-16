@@ -501,7 +501,11 @@ public final class SCMContainerPlacementRackAware
         throw new SCMException("No satisfied datanode to meet the" +
             " excludedNodes and affinityNode constrains.", null);
       }
-
+      if (usedNodes != null && usedNodes.contains(node)) {
+        LOG.warn("Skipping node {} because it's in usedNodes", node);
+        excludedNodesForCapacity.add(node.getNetworkFullPath());
+        continue;
+      }
       if (isValidNode(node, metadataSizeRequired, dataSizeRequired)) {
         metrics.incrDatanodeChooseSuccessCount();
         if (isFallbacked) {
