@@ -395,10 +395,13 @@ public class ECReconstructionCoordinator implements Closeable {
       // Even after retries if it failed, we should declare the
       // reconstruction as failed.
       // For now, let's throw the exception.
-      throw new IOException("Chunk write failed at the new target node: " +
-          targetBlockStream.getDatanodeDetails() +
-          ". Aborting the reconstruction process.",
-          targetBlockStream.getIoException());
+      LOG.error("Chunk write failed at the new target node: {}. Aborting the reconstruction process. {}",
+          targetBlockStream.getDatanodeDetails(), targetBlockStream.getIoException().toString());
+      return;
+//      throw new IOException("Chunk write failed at the new target node: " +
+//          targetBlockStream.getDatanodeDetails() +
+//          ". Aborting the reconstruction process.",
+//          targetBlockStream.getIoException());
     }
   }
 
