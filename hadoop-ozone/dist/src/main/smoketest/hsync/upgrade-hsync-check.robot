@@ -22,7 +22,7 @@ Resource            ../commonlib.robot
 Resource            ../lib/fs.robot
 Resource            ../debug/ozone-debug.robot
 Default Tags        pre-finalized-hsync-tests
-Suite Setup         Run Keyword if    '${SECURITY_ENABLED}' == 'true'    Kinit test user     testuser     testuser.keytab
+Suite Setup         Setup Security If Enabled And Kinit test
 
 *** Variables ***
 ${OM_SERVICE_ID}    %{OM_SERVICE_ID}

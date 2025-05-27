@@ -18,7 +18,7 @@ Documentation       Test ozone shell CLI usage
 Library             OperatingSystem
 Resource            ../commonlib.robot
 Resource            ozone-shell-lib.robot
-Test Setup          Run Keyword if    '${SECURITY_ENABLED}' == 'true'    Kinit test user     testuser     testuser.keytab
+Test Setup          Setup Security If Enabled And Kinit test
 Test Timeout        10 minutes
 Suite Setup         Generate prefix
 

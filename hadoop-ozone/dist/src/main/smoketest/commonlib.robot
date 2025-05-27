@@ -31,13 +31,27 @@ Get test user principal
     ${instance} =       Execute                    hostname | sed 's/scm[0-9].org/scm/;s/scm[0-9]/scm/;s/om[0-9]/om/'
     [return]            ${user}/${instance}@EXAMPLE.COM
 
+Get Security Enabled From Config
+    ${value} =    Execute    sed -n "/<name>ozone.security.enabled<\\/name>/,/<\\/property>/s|.*<value>\\(.*\\)</value>.*|\\1|p" /etc/hadoop/ozone-site.xml | head -n1 | xargs
+    Run Keyword If    '${value}' == ''    Set Variable   ${value}    false
+    Set Global Variable      ${SECURITY_ENABLED}    ${value}
+    [return]                 ${SECURITY_ENABLED}
+
+Setup Security If Enabled And Kinit test
+    ${SECURITY_ENABLED} =    Get Security Enabled From Config
+    Run Keyword If      '${SECURITY_ENABLED}' == 'true'     Kinit test user    testuser    testuser.keytab
+
+Setup Security If Not Enabled
+    ${SECURITY_ENABLED} =    Get Security Enabled From Config
+    Run Keyword If    '${SECURITY_ENABLED}' == 'false'    BuiltIn.Skip
+
 Kinit HTTP user
-    Pass Execution If   '${SECURITY_ENABLED}' == 'false'    Skip in unsecure cluster
+    Pass Execution If   '${SECURITY_ENABLED}'    Skip in unsecure cluster
     ${principal} =      Get test user principal    HTTP
     Wait Until Keyword Succeeds      2min       10sec      Execute            kinit -k -t /etc/security/keytabs/HTTP.keytab ${principal}
 
 Kinit test user
-    Pass Execution If   '${SECURITY_ENABLED}' == 'false'    Skip in unsecure cluster
+    Pass Execution If   '${SECURITY_ENABLED}'    Skip in unsecure cluster
     [arguments]                      ${user}       ${keytab}
     ${TEST_USER} =      Get test user principal    ${user}
     Set Suite Variable  ${TEST_USER}
@@ -50,6 +64,7 @@ Access should be denied
 
 Requires admin privilege
     [arguments]    ${command}
-    Pass Execution If   '${SECURITY_ENABLED}' == 'false'    Skip privilege check in unsecure cluster
+    ${SECURITY_ENABLED} =    Get Security Enabled From Config
+    Pass Execution If   '${SECURITY_ENABLED}'    Skip privilege check in unsecure cluster
     Kinit test user     testuser2     testuser2.keytab
     Access should be denied    ${command}

@@ -21,18 +21,21 @@ Test Timeout        5 minutes
 
 *** Keywords ***
 Setup Test
-    Run Keyword if    '${SECURITY_ENABLED}' == 'true'    Kinit test user     testuser     testuser.keytab
+    Run Keyword if    Setup Security If Enabled And Kinit test
 
 *** Test Cases ***
 Reconfigure OM
+    ${SECURITY_ENABLED} =    Get Security Enabled From Config
     Pass Execution If       '${SECURITY_ENABLED}' == 'false'    N/A
         ${output} =             Execute          ozone admin reconfig --address=om:9862 --service=OM start
         Should Contain          ${output}        Started reconfiguration task on node
 Reconfigure SCM
+    ${SECURITY_ENABLED} =    Get Security Enabled From Config
     Pass Execution If       '${SECURITY_ENABLED}' == 'false'    N/A
         ${output} =             Execute          ozone admin reconfig --address=scm:9860 --service=SCM start
         Should Contain          ${output}        Started reconfiguration task on node
 Reconfigure DN
+    ${SECURITY_ENABLED} =    Get Security Enabled From Config
     Pass Execution If       '${SECURITY_ENABLED}' == 'false'    N/A
         ${output} =             Execute          ozone admin reconfig --address=datanode:19864 --service=DATANODE start
         Should Contain          ${output}        Started reconfiguration task on node

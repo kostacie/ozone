@@ -19,7 +19,7 @@ Library             OperatingSystem
 Library             BuiltIn
 Resource            ../commonlib.robot
 Default Tags        pre-finalized-snapshot-tests
-Suite Setup         Run Keyword if    '${SECURITY_ENABLED}' == 'true'    Kinit test user     testuser     testuser.keytab
+Suite Setup         Setup Security If Enabled And Kinit test
 Test Timeout        5 minutes
 
 *** Variables ***

@@ -17,8 +17,7 @@
 Documentation       Test ozone s3 getsecret command
 Resource            ../commonlib.robot
 Test Timeout        2 minutes
-Suite Setup         Run Keyword if    '${SECURITY_ENABLED}' == 'true'    Kinit test user     testuser     testuser.keytab
-
+Suite Setup         Setup Security If Enabled And Kinit test
 *** Keywords ***
 Verify output
     [arguments]    ${output}
@@ -30,6 +29,7 @@ Revoke secrets
 
 *** Test Cases ***
 Without OM service ID
+    ${SECURITY_ENABLED} =    Get Security Enabled From Config
     Pass Execution If      '${SECURITY_ENABLED}' == 'false'    N/A
     Revoke secrets
     ${output} =            Execute             ozone s3 getsecret -u testuser2
@@ -37,6 +37,7 @@ Without OM service ID
     Revoke secrets
 
 With OM service ID
+    ${SECURITY_ENABLED} =    Get Security Enabled From Config
     Pass Execution If      '${OM_HA_PARAM}' == '${EMPTY}'          duplicate test in non-HA env.
     Pass Execution If      '${SECURITY_ENABLED}' == 'false'    N/A
     Revoke secrets

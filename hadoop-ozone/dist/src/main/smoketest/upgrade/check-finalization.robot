@@ -18,7 +18,7 @@ Documentation       Finalize Upgrade of the Ozone cluster
 Resource            ../commonlib.robot
 Resource            lib.robot
 Test Timeout        10 minutes
-Test Setup          Run Keyword if    '${SECURITY_ENABLED}' == 'true'    Kinit test user     testuser     testuser.keytab
+Test Setup          Setup Security If Enabled And Kinit test
 
 *** Test Cases ***
 Check OM Finalized

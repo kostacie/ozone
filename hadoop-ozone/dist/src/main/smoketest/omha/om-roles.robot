@@ -17,7 +17,7 @@
 Documentation       Smoke test for listing om roles.
 Resource            ../commonlib.robot
 Test Timeout        5 minutes
-Test Setup          Run Keyword if    '${SECURITY_ENABLED}' == 'true'    Kinit test user     testuser     testuser.keytab
+Test Setup          Setup Security If Enabled And Kinit test
 
 *** Keywords ***
 Assert Leader Present
