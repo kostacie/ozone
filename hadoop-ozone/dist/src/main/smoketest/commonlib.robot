@@ -32,6 +32,7 @@ Get test user principal
     [return]            ${user}/${instance}@EXAMPLE.COM
 
 Kinit HTTP user
+    Log To Console     Secuirty_enabled equals ${SECURITY_ENABLED}
     Pass Execution If   '${SECURITY_ENABLED}' == 'false'    Skip in unsecure cluster
     ${principal} =      Get test user principal    HTTP
     Wait Until Keyword Succeeds      2min       10sec      Execute            kinit -k -t /etc/security/keytabs/HTTP.keytab ${principal}
