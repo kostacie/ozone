@@ -35,8 +35,10 @@ Get Security Enabled From Config
     ${conf_dir} =    Get Environment Variable    OZONE_CONF_DIR
     ${file} =     Set Variable    ${conf_dir}/ozone-site.xml
     ${value} =    Execute    sed -n "/<name>ozone.security.enabled<\\/name>/,/<\\/property>/s|.*<value>\\(.*\\)</value>.*|\\1|p" ${file} | head -n1 | xargs
-    Run Keyword If    '${value}' == ''    Set Variable   ${value}    ${FALSE}
-    Set Global Variable      ${SECURITY_ENABLED}    ${value}
+    Run Keyword If    '${value}' != 'true' and '${value}' != 'false'    Set Variable    ${value}    ${FALSE}
+    Set Global Variable      ${SECURITY_ENABLED}     ${value}
+    Log To Console    value equals ${value}
+    Log To Console    SECURITY_ENABLED equals ${SECURITY_ENABLED}
     [return]                 ${SECURITY_ENABLED}
 
 Kinit HTTP user
