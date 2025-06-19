@@ -38,6 +38,7 @@ Get Security Enabled From Config
            ${value} =    Set Variable    false
     END
     Set Global Variable      ${SECURITY_ENABLED}     ${value}
+    Log To Console     SECURITY_ENABLED equals ${SECURITY_ENABLED}
 
 Kinit HTTP user
     Pass Execution If   '${SECURITY_ENABLED}' == 'false'    Skip in unsecure cluster
