@@ -31,9 +31,37 @@
   </properties>
   <dependencies>
     <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-transport-classes-epoll</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-transport-native-epoll</artifactId>
+      <classifier>linux-x86_64</classifier>
+    </dependency>
+    <dependency>
       <groupId>org.apache.ozone</groupId>
-      <artifactId>ozone-filesystem-shaded</artifactId>
-      <optional>true</optional>
+      <artifactId>hdds-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ozone</groupId>
+      <artifactId>hdds-config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ozone</groupId>
+      <artifactId>ozone-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ozone</groupId>
+      <artifactId>ozone-filesystem-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
     </dependency>
     <dependency>
       <groupId>ch.qos.reload4j</groupId>
@@ -69,31 +97,6 @@
         <configuration>
           <proc>none</proc>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>include-dependencies</id>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <phase>prepare-package</phase>
-            <configuration>
-              <skip>${maven.shade.skip}</skip>
-              <excludes>META-INF/versions/**/*.*</excludes>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.apache.ozone</groupId>
-                  <artifactId>ozone-filesystem-shaded</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-              </artifactItems>
-              <outputDirectory>target/classes</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>

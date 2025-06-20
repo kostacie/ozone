@@ -34,13 +34,7 @@
     <maven.test.skip>true</maven.test.skip>
     <proto.shaded.prefix>org.apache.hadoop.shaded</proto.shaded.prefix>
   </properties>
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.ozone</groupId>
-      <artifactId>ozone-filesystem-hadoop3</artifactId>
-      <optional>true</optional>
-    </dependency>
-  </dependencies>
+  <dependencies />
   <build>
     <plugins>
       <plugin>
@@ -49,31 +43,6 @@
         <configuration>
           <proc>none</proc>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>include-dependencies</id>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <phase>prepare-package</phase>
-            <configuration>
-              <skip>${maven.shade.skip}</skip>
-              <excludes>META-INF/versions/**/*.*</excludes>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.apache.ozone</groupId>
-                  <artifactId>ozone-filesystem-shaded</artifactId>
-                  <version>${project.version}</version>
-                </artifactItem>
-              </artifactItems>
-              <outputDirectory>target/classes</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
