@@ -22,4 +22,5 @@ Test Timeout        2 minute
 
 *** Test Cases ***
 Kinit
+   Run Keyword         Get Security Enabled From Config
    Kinit test user     hadoop     hadoop.keytab
