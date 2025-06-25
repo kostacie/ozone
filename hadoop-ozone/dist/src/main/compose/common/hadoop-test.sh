@@ -60,6 +60,10 @@ for HADOOP_TEST_IMAGE in $HADOOP_TEST_IMAGES; do
 
   execute_command_in_container rm hadoop version
 
+    if [[ ${SECURITY_ENABLED} != "true" && ${SECURITY_ENABLED} != "false" ]]; then
+      SECURITY_ENABLED="false"
+    fi
+
   if [[ ${SECURITY_ENABLED} == "true" ]]; then
     execute_robot_test rm kinit-hadoop.robot
   fi
