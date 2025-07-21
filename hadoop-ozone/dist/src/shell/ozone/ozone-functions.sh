@@ -1563,6 +1563,18 @@ function ozone_add_client_opts
   fi
 }
 
+## @description  Adds the OZONE_SERVER_OPTS variable to OZONE_OPTS if OZONE_SUBCMD_SUPPORTDAEMONIZATION is true
+## @audience     public
+## @stability    stable
+## @replaceable  yes
+function ozone_add_server_opts
+{
+  if [[ "${OZONE_SUBCMD_SUPPORTDAEMONIZATION}" == "true" ]] && [[ -n "${OZONE_SERVER_OPTS:-}" ]]; then
+    ozone_debug "Appending OZONE_SERVER_OPTS onto OZONE_OPTS"
+    OZONE_OPTS="${OZONE_OPTS} ${OZONE_SERVER_OPTS}"
+  fi
+}
+
 ## @description  Finish configuring Hadoop specific system properties
 ## @description  prior to executing Java
 ## @audience     private
@@ -2816,14 +2828,6 @@ function ozone_assemble_classpath() {
     ozone_add_classpath "$jar"
   done
   ozone_add_classpath "${OZONE_HOME}/share/ozone/web"
-
-  #We need to add the artifact manually as it's not part the generated classpath desciptor
-  local MAIN_ARTIFACT
-  MAIN_ARTIFACT=$(find "$HDDS_LIB_JARS_DIR" -name "${OZONE_RUN_ARTIFACT_NAME}-*.jar")
-  if [[ -z "$MAIN_ARTIFACT" ]] || [[ ! -e "$MAIN_ARTIFACT" ]]; then
-    echo "ERROR: Component jar file $MAIN_ARTIFACT is missing from ${HDDS_LIB_JARS_DIR}"
-  fi
-  ozone_add_classpath "${MAIN_ARTIFACT}"
 
   #Add optional jars to the classpath
   local OPTIONAL_CLASSPATH_DIR
