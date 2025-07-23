@@ -164,7 +164,7 @@ Key Info File Flag Should Be Set Correctly
 
     ${keypath} =      Set Variable    /vol1/${bucket}/dir-${DATA_VERSION}/file-${DATA_VERSION}
     ${dirpath} =      Set Variable    /vol1/${bucket}/dir-${DATA_VERSION}/
-    # Execute           ozone fs -mkdir -p ${dirpath}
+    Execute           ozone fs -mkdir -p ${dirpath}
 
     IF    '${CLUSTER_VERSION}' <= '${EC_VERSION}' or '${CLIENT_VERSION}' <= '${EC_VERSION}'
            Log To Console    Cluster or client version less or equal 1.3
