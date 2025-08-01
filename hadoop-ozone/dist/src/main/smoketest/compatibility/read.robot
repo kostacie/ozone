@@ -160,13 +160,8 @@ Key Info File Flag Should Be Set Correctly
     # Pass Execution If    '${CLUSTER_VERSION}' <= '${EC_VERSION}'   Cluster does not support 'file' flag
     # Pass Execution If    '${CLIENT_VERSION}' <= '${EC_VERSION}'    Client does not support 'file' flag
 
-    ${bucket} =       Create bucket with layout   /vol1     FILE_SYSTEM_OPTIMIZED
-
-    ${keypath} =      Set Variable    /vol1/${bucket}/dir-${DATA_VERSION}/file-${DATA_VERSION}
-    ${dirpath} =      Set Variable    /vol1/${bucket}/dir-${DATA_VERSION}/
-
-    Execute           ozone fs -mkdir -p ${dirpath}
-    Create Key        ${keypath}    ${TESTFILE}
+    ${dirpath} =      Set Variable    /vol1/fso-bucket-${DATA_VERSION}/dir/subdir/
+    ${keypath} =      Set Variable    /vol1/fso-bucket-${DATA_VERSION}/dir/subdir/file
 
     IF    '${CLUSTER_VERSION}' <= '${EC_VERSION}' or '${CLIENT_VERSION}' <= '${EC_VERSION}'
            Log To Console    Cluster or client version less or equal 1.3
